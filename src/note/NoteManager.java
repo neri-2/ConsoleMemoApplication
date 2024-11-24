@@ -1,10 +1,11 @@
 package note;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 public class NoteManager {
-    private FileHandler fileHandler = new FileHandler();
+    private final FileHandler fileHandler = new FileHandler();
 
     public void createNote(String content) throws IOException {
         /* 사용자 입력 받아 메모 저장 */
@@ -13,9 +14,9 @@ public class NoteManager {
 
     public void viewAllNotes() {
         /* 모든 메모 출력 -> 파일 이름을 출력할지 내용을 출력할지 */
-        List<String> notes = fileHandler.readAllNotes();
-        for (String note : notes) {
-            System.out.println(note);
+        List<Path> notes = fileHandler.readAllNotes();
+        for (Path note : notes) {
+            System.out.println(note.getFileName());
         }
     }
 

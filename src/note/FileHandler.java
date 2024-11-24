@@ -5,14 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class FileHandler {
 
     private static final String FILE_DIRECTORY = "temp/";
     private static final String FILE_EXTENSION = ".txt";
-    private List<String> fileList = new ArrayList<>();
 
     public void saveNote(String note) throws IOException {
         /* 파일 저장 로직 */
@@ -23,17 +22,22 @@ public class FileHandler {
         Path path = Path.of(FILE_DIRECTORY + fileName + FILE_EXTENSION);
         // 현재 날짜 시간 이름으로 파일 저장
         Files.writeString(path, note);
-        fileList.add(fileName);
     }
 
-    public List<String> readAllNotes() {
+    public List<Path> readAllNotes() {
         /* 파일 목록 조회 로직 */
-        return fileList;
+        Path path = Path.of(FILE_DIRECTORY);
+
+        try (Stream<Path> pathStream = Files.list(path)) {
+            return pathStream.toList();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteNote(String fileName) {
         /* 파일 삭제 로직 */
-        fileList.remove(fileName);
         Path path = Path.of(FILE_DIRECTORY + fileName + FILE_EXTENSION);
 
         try {
