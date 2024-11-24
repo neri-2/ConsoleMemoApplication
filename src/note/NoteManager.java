@@ -19,5 +19,8 @@ public class NoteManager {
         }
     }
 
-    public void deleteNoteByName(String name) { /* 특정 메모 삭제 */ }
+    public void deleteNoteByName(String name) {
+        /* 특정 메모 삭제 */
+        fileHandler.deleteNote(name);
+    }
 }
