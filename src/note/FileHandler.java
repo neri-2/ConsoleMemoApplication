@@ -2,6 +2,7 @@ package note;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,20 @@ public class FileHandler {
         }
     }
 
+    public void deleteAllNotes() {
+        Path path = Path.of(FILE_DIRECTORY);
+
+        try (Stream<Path> files = Files.list(path)) {
+            List<Path> lists = files.toList();
+            for (Path list : lists) {
+                Files.delete(list);
+            }
+            System.out.println("모든 메모가 삭제되었습니다");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void deleteNote(String fileName) {
         /* 파일 삭제 로직 */
         Path path = Path.of(FILE_DIRECTORY + fileName + FILE_EXTENSION);
@@ -43,8 +58,10 @@ public class FileHandler {
         try {
             Files.delete(path);
             System.out.println(fileName + " 메모가 삭제되었습니다");
+        } catch (NoSuchFileException e) {
+            System.out.println("해당하는 이름의 메모가 존재하지 않습니다.");
         } catch (IOException e) {
-            System.out.println("메모가 존재하지 않습니다.");
+            throw new RuntimeException(e);
         }
     }
 }

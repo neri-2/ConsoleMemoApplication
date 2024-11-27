@@ -27,9 +27,22 @@ public class NoteApp {
                     noteManager.viewAllNotes();
                     break;
                 case 3:
-                    System.out.println("삭제할 메모를 입력해주세요.");
-                    String deleteMemo = scanner.nextLine();
-                    noteManager.deleteNoteByName(deleteMemo);
+                    System.out.println("1: 메모 선택 삭제 | 2: 메모 전체 삭제");
+
+                    int deleteChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (deleteChoice) {
+                        case 1:
+                            noteManager.viewAllNotes();
+                            System.out.println("삭제할 메모를 입력해주세요.");
+                            String deleteMemo = scanner.nextLine();
+                            noteManager.deleteNoteByName(deleteMemo);
+                            break;
+                        case 2:
+                            noteManager.deleteAllNote();
+                            break;
+                    }
+
                     break;
                 case 0:
                     System.out.println("프로그램을 종료합니다.");

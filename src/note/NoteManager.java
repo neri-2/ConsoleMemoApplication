@@ -20,6 +20,11 @@ public class NoteManager {
         }
     }
 
+    public void deleteAllNote() {
+        /* 전체 메모 삭제 */
+        fileHandler.deleteAllNotes();
+    }
+
     public void deleteNoteByName(String name) {
         /* 특정 메모 삭제 */
         fileHandler.deleteNote(name);
